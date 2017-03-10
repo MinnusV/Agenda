@@ -23,7 +23,7 @@ public class StudentsListActivity extends AppCompatActivity {
 
         //Inserindo alunos na listview definida no xml
         String[] studends = {"Erick", "John", "Fidelis ", "Costa", "João"};
-        ListView studeList = (ListView) findViewById(R.id.studentsListView);
+        ListView studeList = (ListView) findViewById(R.id.studentsList_listViewStudents);
         ArrayAdapter<String> studentsListViewAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, studends);
         studeList.setAdapter(studentsListViewAdapter);
     }
