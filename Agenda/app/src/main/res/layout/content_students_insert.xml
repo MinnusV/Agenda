@@ -53,12 +53,6 @@
             android:numStars="5"
             android:layout_gravity="center" />
 
-        <Button
-            android:id="@+id/studentsInsert_buttonSave"
-            android:text="Salvar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
     </LinearLayout>
 
 </ScrollView>

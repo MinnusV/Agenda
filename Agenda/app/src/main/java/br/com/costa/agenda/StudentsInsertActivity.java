@@ -1,43 +1,65 @@
 package br.com.costa.agenda;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
+import br.com.costa.agenda.model.Student;
+import br.com.costa.agenda.utils.StudentsInsertUtil;
+
 public class StudentsInsertActivity extends AppCompatActivity {
+
+    private StudentsInsertUtil studentsInsertUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        //Carregando configurações do AppCompatActivity para o onCreate
         super.onCreate(savedInstanceState);
-        //Adicionando o xml ao conteúdo da tela
         setContentView(R.layout.activity_students_insert);
 
-        Button saveButton = (Button) findViewById(R.id.studentsInsert_buttonSave);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        studentsInsertUtil = new StudentsInsertUtil();
 
-                if(validateSave()) {
-                    Toast.makeText(StudentsInsertActivity.this, "Save!", Toast.LENGTH_SHORT).show();
-                }else if(!validateSave()){
-                    Toast.makeText(StudentsInsertActivity.this, "Not Save!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.this_menu_insert, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.StudentsInsert_MenuOk:
+                Student student = new Student();
+
+                try {
+                    student = studentsInsertUtil.buildStudentForInsert(StudentsInsertActivity.this);
+                    Toast.makeText(StudentsInsertActivity.this, "Novo aluno " + student.getName() + " salvo!", Toast.LENGTH_SHORT).show();
+                    finish();
+                }catch (Exception e){
+                    Toast.makeText(StudentsInsertActivity.this, "Erro ao salvar novo aluno!", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
 
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
-    private boolean validateSave(){
-        //boolean validade = true;
-        boolean validade = false;
-
-        return validade;
-    }
 }
