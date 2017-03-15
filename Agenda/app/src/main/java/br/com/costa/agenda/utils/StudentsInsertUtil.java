@@ -63,7 +63,7 @@ public class StudentsInsertUtil{
 
         Student student = new Student();
         student.setName(name);
-        student.setAddres(address);
+        student.setAddress(address);
         student.setEmail(email);
         student.setNumber(number);
         student.setSite(site);

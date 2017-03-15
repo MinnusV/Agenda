@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import br.com.costa.agenda.dao.StudentDAO;
 import br.com.costa.agenda.model.Student;
 import br.com.costa.agenda.utils.StudentsInsertUtil;
 
@@ -29,7 +30,6 @@ public class StudentsInsertActivity extends AppCompatActivity {
         setContentView(R.layout.activity_students_insert);
 
         studentsInsertUtil = new StudentsInsertUtil();
-
     }
 
     @Override
@@ -49,7 +49,10 @@ public class StudentsInsertActivity extends AppCompatActivity {
                 Student student = new Student();
 
                 try {
+                    StudentDAO studentDAO = new StudentDAO(StudentsInsertActivity.this);
                     student = studentsInsertUtil.buildStudentForInsert(StudentsInsertActivity.this);
+                    studentDAO.create(student);
+                    studentDAO.close();
                     Toast.makeText(StudentsInsertActivity.this, "Novo aluno " + student.getName() + " salvo!", Toast.LENGTH_SHORT).show();
                     finish();
                 }catch (Exception e){

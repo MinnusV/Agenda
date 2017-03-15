@@ -8,7 +8,7 @@ public class Student {
 
     private Long id;
     private String name;
-    private String addres;
+    private String address;
     private String email;
     private String number;
     private String site;
@@ -30,12 +30,12 @@ public class Student {
         this.name = name;
     }
 
-    public String getAddres() {
-        return addres;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAddres(String addres) {
-        this.addres = addres;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getEmail() {
@@ -68,5 +68,10 @@ public class Student {
 
     public void setNote(Float note) {
         this.note = note;
+    }
+
+    @Override
+    public String toString() {
+        return this.getName();
     }
 }
