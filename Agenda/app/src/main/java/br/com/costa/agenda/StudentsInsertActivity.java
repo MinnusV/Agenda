@@ -29,7 +29,16 @@ public class StudentsInsertActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_students_insert);
 
-        studentsInsertUtil = new StudentsInsertUtil();
+        studentsInsertUtil = new StudentsInsertUtil(StudentsInsertActivity.this);
+
+        Intent intent = getIntent();
+        Student editStudent = (Student) intent.getSerializableExtra("student");
+
+
+        if (editStudent != null){
+            studentsInsertUtil.buildEditStudent(editStudent);
+        }
+
     }
 
     @Override
@@ -47,11 +56,16 @@ public class StudentsInsertActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.StudentsInsert_MenuOk:
                 Student student = new Student();
-
                 try {
                     StudentDAO studentDAO = new StudentDAO(StudentsInsertActivity.this);
-                    student = studentsInsertUtil.buildStudentForInsert(StudentsInsertActivity.this);
-                    studentDAO.create(student);
+                    student = studentsInsertUtil.buildStudentForInsert();
+
+                    if (student.getId() != null){
+                        studentDAO.update(student);
+                    }else{
+                        studentDAO.create(student);
+                    }
+
                     studentDAO.close();
                     Toast.makeText(StudentsInsertActivity.this, "Novo aluno " + student.getName() + " salvo!", Toast.LENGTH_SHORT).show();
                     finish();

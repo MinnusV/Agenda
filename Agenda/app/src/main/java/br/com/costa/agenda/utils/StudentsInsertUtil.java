@@ -13,45 +13,54 @@ import br.com.costa.agenda.model.Student;
 
 public class StudentsInsertUtil{
 
-    public StudentsInsertUtil(){
+    private EditText textName;
+    private EditText textAddress;
+    private EditText textEmail;
+    private EditText textNumber;
+    private EditText textSite;
+    private RatingBar ratingNote;
+    private Student student;
 
+    public StudentsInsertUtil(AppCompatActivity appCompatActivity){
+
+        textName = (EditText) appCompatActivity.findViewById(R.id.studentsInsert_editTextName);
+        textAddress = (EditText) appCompatActivity.findViewById(R.id.studentsInsert_editTextAddres);
+        textEmail = (EditText) appCompatActivity.findViewById(R.id.studentsInsert_editTextEmail);
+        textNumber = (EditText) appCompatActivity.findViewById(R.id.studentsInsert_editTextNumber);
+        textSite = (EditText) appCompatActivity.findViewById(R.id.studentsInsert_editTextSite);
+        ratingNote = (RatingBar) appCompatActivity.findViewById(R.id.studentInsert_ratingBarNote);
+        student = new Student();
     }
 
-    public Student buildStudentForInsert(AppCompatActivity appCompatActivity) throws Exception {
+    public Student buildStudentForInsert() throws Exception {
 
-        EditText textName = (EditText) appCompatActivity.findViewById(R.id.studentsInsert_editTextName);
         if (textName.getText().toString() == "") {
             throw new Exception();
         }
 
-        EditText textAddres = (EditText) appCompatActivity.findViewById(R.id.studentsInsert_editTextAddres);
-        if (textAddres.getText().toString() == "") {
+        if (textAddress.getText().toString() == "") {
             throw new Exception();
         }
 
-        EditText textEmail = (EditText) appCompatActivity.findViewById(R.id.studentsInsert_editTextEmail);
         if (textEmail.getText().toString() == "") {
             throw new Exception();
         }
 
-        EditText textNumber = (EditText) appCompatActivity.findViewById(R.id.studentsInsert_editTextNumber);
         if (textNumber.getText().toString() == "") {
             throw new Exception();
         }
 
-        EditText textSite = (EditText) appCompatActivity.findViewById(R.id.studentsInsert_editTextSite);
         if (textSite.getText().toString() == "") {
             throw new Exception();
         }
 
-        RatingBar ratingNote = (RatingBar) appCompatActivity.findViewById(R.id.studentInsert_ratingBarNote);
         if (ratingNote.getRating() == 0) {
             throw new Exception();
         }
 
         String name = textName.getText().toString();
 
-        String address = textAddres.getText().toString();
+        String address = textAddress.getText().toString();
 
         String email = textEmail.getText().toString();
 
@@ -61,15 +70,31 @@ public class StudentsInsertUtil{
 
         Float note = ratingNote.getRating();
 
-        Student student = new Student();
-        student.setName(name);
-        student.setAddress(address);
-        student.setEmail(email);
-        student.setNumber(number);
-        student.setSite(site);
-        student.setNote(note);
+        this.student.setName(name);
+        this.student.setAddress(address);
+        this.student.setEmail(email);
+        this.student.setNumber(number);
+        this.student.setSite(site);
+        this.student.setNote(note);
 
-        return student;
+        return this.student;
     }
 
+    public void buildEditStudent(Student editStudent) {
+
+        textName.setText(editStudent.getName());
+
+        textAddress.setText(editStudent.getAddress());
+
+        textEmail.setText(editStudent.getEmail());
+
+        textNumber.setText(editStudent.getNumber());
+
+        textSite.setText(editStudent.getSite());
+
+        ratingNote.setProgress(editStudent.getNote().intValue());
+
+        this.student = editStudent;
+
+    }
 }

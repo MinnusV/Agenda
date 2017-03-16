@@ -1,10 +1,12 @@
 package br.com.costa.agenda.model;
 
+import java.io.Serializable;
+
 /**
  * Created by ErickJohnFidelisCost on 14/03/2017.
  */
 
-public class Student {
+public class Student implements Serializable{
 
     private Long id;
     private String name;

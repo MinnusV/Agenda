@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,13 +51,7 @@ public class StudentDAO extends SQLiteOpenHelper{
 
         SQLiteDatabase database = getWritableDatabase();
 
-        ContentValues studentValues = new ContentValues();
-        studentValues.put("name", student.getName());
-        studentValues.put("address", student.getAddress());
-        studentValues.put("email", student.getEmail());
-        studentValues.put("number", student.getNumber());
-        studentValues.put("site", student.getSite());
-        studentValues.put("note", student.getNote());
+        ContentValues studentValues = getContentValues(student);
 
         database.insert("Students", null, studentValues);
     }
@@ -87,5 +82,33 @@ public class StudentDAO extends SQLiteOpenHelper{
         cursorReadStudents.close();
 
         return alunos;
+    }
+
+    public void delete(Long id) {
+
+        SQLiteDatabase database = getWritableDatabase();
+        String[] params = {id.toString()};
+        database.delete("Students", "id = ?", params);
+    }
+
+    public void update(Student student) {
+
+        SQLiteDatabase database = getWritableDatabase();
+        ContentValues studentValues = getContentValues(student);
+        String[] params = {student.getId().toString()};
+        database.update("Students", studentValues, "id = ?", params);
+
+    }
+
+    @NonNull
+    private ContentValues getContentValues(Student student) {
+        ContentValues studentValues = new ContentValues();
+        studentValues.put("name", student.getName());
+        studentValues.put("address", student.getAddress());
+        studentValues.put("email", student.getEmail());
+        studentValues.put("number", student.getNumber());
+        studentValues.put("site", student.getSite());
+        studentValues.put("note", student.getNote());
+        return studentValues;
     }
 }
