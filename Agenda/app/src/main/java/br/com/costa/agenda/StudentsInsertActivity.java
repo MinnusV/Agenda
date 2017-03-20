@@ -2,17 +2,11 @@ package br.com.costa.agenda;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RatingBar;
+
 import android.widget.Toast;
 
 import br.com.costa.agenda.dao.StudentDAO;
@@ -20,6 +14,7 @@ import br.com.costa.agenda.model.Student;
 import br.com.costa.agenda.utils.StudentsInsertUtil;
 
 public class StudentsInsertActivity extends AppCompatActivity {
+
 
     private StudentsInsertUtil studentsInsertUtil;
 
@@ -70,7 +65,7 @@ public class StudentsInsertActivity extends AppCompatActivity {
                     Toast.makeText(StudentsInsertActivity.this, "Novo aluno " + student.getName() + " salvo!", Toast.LENGTH_SHORT).show();
                     finish();
                 }catch (Exception e){
-                    Toast.makeText(StudentsInsertActivity.this, "Erro ao salvar novo aluno!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(StudentsInsertActivity.this, "Erro ao salvar novo aluno. \n" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
                 break;

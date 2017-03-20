@@ -34,29 +34,29 @@ public class StudentsInsertUtil{
 
     public Student buildStudentForInsert() throws Exception {
 
-        if (textName.getText().toString() == "") {
-            throw new Exception();
+        if (textName.getText().toString().equals("")) {
+            throw new Exception("Campo 'nome' obrigatório!");
         }
 
-        if (textAddress.getText().toString() == "") {
-            throw new Exception();
+        if (textAddress.getText().toString().equals("")) {
+            throw new Exception("Campo 'endereço' obrigatório!");
         }
 
-        if (textEmail.getText().toString() == "") {
-            throw new Exception();
+        if (textEmail.getText().toString().equals("")) {
+            throw new Exception("Campo 'email' obrigatório!");
         }
 
-        if (textNumber.getText().toString() == "") {
-            throw new Exception();
+        if (textNumber.getText().toString().equals("")) {
+            throw new Exception("Camnpo 'número' obrigatório!");
         }
 
-        if (textSite.getText().toString() == "") {
-            throw new Exception();
-        }
+//        if (textSite.getText().toString() == "") {
+//            throw new Exception();
+//        }
 
-        if (ratingNote.getRating() == 0) {
-            throw new Exception();
-        }
+//        if (ratingNote.getRating() == 0) {
+//            throw new Exception();
+//        }
 
         String name = textName.getText().toString();
 
@@ -75,7 +75,7 @@ public class StudentsInsertUtil{
         this.student.setEmail(email);
         this.student.setNumber(number);
         this.student.setSite(site);
-        this.student.setNote(note);
+        this.student.setNote(Double.valueOf(note));
 
         return this.student;
     }
@@ -92,7 +92,7 @@ public class StudentsInsertUtil{
 
         textSite.setText(editStudent.getSite());
 
-        ratingNote.setProgress(editStudent.getNote().intValue());
+        ratingNote.setRating(editStudent.getNote().floatValue());
 
         this.student = editStudent;
 

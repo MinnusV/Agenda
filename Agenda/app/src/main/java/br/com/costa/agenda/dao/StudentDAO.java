@@ -74,7 +74,7 @@ public class StudentDAO extends SQLiteOpenHelper{
             student.setEmail(cursorReadStudents.getString(cursorReadStudents.getColumnIndex("email")));
             student.setNumber(cursorReadStudents.getString(cursorReadStudents.getColumnIndex("number")));
             student.setSite(cursorReadStudents.getString(cursorReadStudents.getColumnIndex("site")));
-            student.setNote(cursorReadStudents.getFloat(cursorReadStudents.getColumnIndex("note")));
+            student.setNote(cursorReadStudents.getDouble(cursorReadStudents.getColumnIndex("note")));
 
             alunos.add(student);
         }

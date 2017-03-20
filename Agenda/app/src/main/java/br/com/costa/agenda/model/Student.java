@@ -14,7 +14,7 @@ public class Student implements Serializable{
     private String email;
     private String number;
     private String site;
-    private Float note;
+    private Double note;
 
     public Long getId() {
         return id;
@@ -64,11 +64,11 @@ public class Student implements Serializable{
         this.site = site;
     }
 
-    public Float getNote() {
+    public Double getNote() {
         return note;
     }
 
-    public void setNote(Float note) {
+    public void setNote(Double note) {
         this.note = note;
     }
 
