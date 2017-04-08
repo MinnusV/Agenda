@@ -84,6 +84,27 @@ public class StudentDAO extends SQLiteOpenHelper{
         return alunos;
     }
 
+    /*public String readSite(Student student){
+
+        SQLiteDatabase database = getReadableDatabase();
+        String sqlReadSiteStudents =
+                "SELECT * FFROM Students WHERE id = " + student.getId();
+
+        Cursor cursorReadSiteStudents = database.rawQuery(sqlReadSiteStudents, null);
+        String emailStudent = "";
+
+        while(cursorReadSiteStudents.moveToNext()){
+            Student students = new Student();
+            students.setEmail(cursorReadSiteStudents.getString(cursorReadSiteStudents.getColumnIndex("site")));
+
+            emailStudent = students.getEmail();
+        }
+
+        cursorReadSiteStudents.close();
+
+        return emailStudent;
+    }*/
+
     public void delete(Long id) {
 
         SQLiteDatabase database = getWritableDatabase();

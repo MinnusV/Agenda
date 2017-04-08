@@ -1,10 +1,15 @@
 package br.com.costa.agenda;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.provider.Browser;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -66,15 +71,52 @@ public class StudentsListActivity extends AppCompatActivity {
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, final ContextMenu.ContextMenuInfo menuInfo) {
-        MenuItem deleteMenuItem = menu.add("Delete");
+        AdapterView.AdapterContextMenuInfo adapterMenuInfo = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        final Student student = (Student) studentListView.getItemAtPosition(adapterMenuInfo.position);
 
+        final StudentDAO studentDAO = new StudentDAO(StudentsListActivity.this);
+
+        MenuItem deleteMenuItem = menu.add("Delete");
+        MenuItem visitarSiteMenuItem = menu.add("Visitar site");
+        MenuItem enviarMensagemMenuItem = menu.add("Enviar SMS");
+        MenuItem localizacaoMenuItem = menu.add("Localização");
+        MenuItem ligacaoMenuItem = menu.add("Efetuar ligação");
+
+        buildVisitarSite(student, visitarSiteMenuItem);
+
+        buildEnviarMensagem(student, enviarMensagemMenuItem);
+
+        buildLocalizacao(student, localizacaoMenuItem);
+
+        buildLigacaoTelefonica(student, ligacaoMenuItem);
+
+        buildRemove(student, studentDAO, deleteMenuItem);
+    }
+
+    private void buildLigacaoTelefonica(final Student student, final MenuItem ligacaoMenuItem) {
+        ligacaoMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if(ActivityCompat.checkSelfPermission(StudentsListActivity.this, Manifest.permission.CALL_PHONE)
+                        != PackageManager.PERMISSION_GRANTED){
+
+                    ActivityCompat.requestPermissions(StudentsListActivity.this, new String[]{Manifest.permission.CALL_PHONE}, 123);
+                }else{
+                    Intent ligacaoTelefonica = new Intent(Intent.ACTION_CALL);
+                    ligacaoTelefonica.setData(Uri.parse("tel:" + student.getNumber()));
+                    startActivity(ligacaoTelefonica);
+                }
+
+                return false;
+            }
+        });
+    }
+
+    private void buildRemove(final Student student, final StudentDAO studentDAO, MenuItem deleteMenuItem) {
         deleteMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                AdapterView.AdapterContextMenuInfo adapterMenuInfo = (AdapterView.AdapterContextMenuInfo) menuInfo;
-                Student student = (Student) studentListView.getItemAtPosition(adapterMenuInfo.position);
 
-                StudentDAO studentDAO = new StudentDAO(StudentsListActivity.this);
                 studentDAO.delete(student.getId());
                 studentDAO.close();
 
@@ -84,6 +126,29 @@ public class StudentsListActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    private void buildLocalizacao(Student student, MenuItem localizacaoMenuItem) {
+        Intent localizacao = new Intent(Intent.ACTION_VIEW);
+        localizacao.setData(Uri.parse("geo:0,0?q=" + student.getAddress()));
+        localizacaoMenuItem.setIntent(localizacao);
+    }
+
+    private void buildEnviarMensagem(Student student, MenuItem enviarMensagemMenuItem) {
+        Intent enviarMensagem = new Intent(Intent.ACTION_VIEW);
+        enviarMensagem.setData(Uri.parse("sms:" + student.getNumber()));
+        enviarMensagemMenuItem.setIntent(enviarMensagem);
+    }
+
+    private void buildVisitarSite(Student student, MenuItem visitarSiteMenuItem) {
+        Intent visitarSite = new Intent(Intent.ACTION_VIEW);
+        String site = student.getSite();
+        if(!site.startsWith("http://")){
+            visitarSite.setData(Uri.parse("http://"+ student.getSite()));
+        }else{
+            visitarSite.setData(Uri.parse(student.getEmail()));
+        }
+        visitarSiteMenuItem.setIntent(visitarSite);
     }
 
     private void buildStudentsList() {
