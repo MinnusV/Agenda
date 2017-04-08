@@ -17,18 +17,18 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="225dp">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_marginBottom="25dp"
                 android:background="#00A8EC"
                 android:src="@drawable/person" />
 
             <Button
                 android:layout_width="56dp"
                 android:layout_height="56dp"
+                android:id="@+id/studentInsert_buttonPhoto"
                 android:background="@drawable/this_background_button_camera"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"

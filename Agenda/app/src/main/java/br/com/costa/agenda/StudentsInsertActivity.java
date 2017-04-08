@@ -2,11 +2,14 @@ package br.com.costa.agenda;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import br.com.costa.agenda.dao.StudentDAO;
@@ -26,13 +29,21 @@ public class StudentsInsertActivity extends AppCompatActivity {
 
         studentsInsertUtil = new StudentsInsertUtil(StudentsInsertActivity.this);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         Student editStudent = (Student) intent.getSerializableExtra("student");
-
 
         if (editStudent != null){
             studentsInsertUtil.buildEditStudent(editStudent);
         }
+
+        Button buttonPhoto = (Button) findViewById(R.id.studentInsert_buttonPhoto);
+        buttonPhoto.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intentCaptureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivity(intentCaptureImage);
+            }
+        });
 
     }
 
