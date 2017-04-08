@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.Browser;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -32,6 +33,7 @@ import br.com.costa.agenda.model.Student;
 public class StudentsListActivity extends AppCompatActivity {
 
     ListView studentListView;
+    Student student;
 
     @Override
     protected void onResume() {
@@ -72,9 +74,9 @@ public class StudentsListActivity extends AppCompatActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, final ContextMenu.ContextMenuInfo menuInfo) {
         AdapterView.AdapterContextMenuInfo adapterMenuInfo = (AdapterView.AdapterContextMenuInfo) menuInfo;
-        final Student student = (Student) studentListView.getItemAtPosition(adapterMenuInfo.position);
-
+        student = (Student) studentListView.getItemAtPosition(adapterMenuInfo.position);
         final StudentDAO studentDAO = new StudentDAO(StudentsListActivity.this);
+
 
         MenuItem deleteMenuItem = menu.add("Delete");
         MenuItem visitarSiteMenuItem = menu.add("Visitar site");
@@ -97,19 +99,26 @@ public class StudentsListActivity extends AppCompatActivity {
         ligacaoMenuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener(){
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if(ActivityCompat.checkSelfPermission(StudentsListActivity.this, Manifest.permission.CALL_PHONE)
-                        != PackageManager.PERMISSION_GRANTED){
-
-                    ActivityCompat.requestPermissions(StudentsListActivity.this, new String[]{Manifest.permission.CALL_PHONE}, 123);
-                }else{
-                    Intent ligacaoTelefonica = new Intent(Intent.ACTION_CALL);
-                    ligacaoTelefonica.setData(Uri.parse("tel:" + student.getNumber()));
-                    startActivity(ligacaoTelefonica);
-                }
+                ActivityCompat.requestPermissions(StudentsListActivity.this, new String[]{Manifest.permission.CALL_PHONE}, 123);
 
                 return false;
             }
         });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(requestCode == 123){
+            if(ActivityCompat.checkSelfPermission(StudentsListActivity.this, Manifest.permission.CALL_PHONE)
+                    == PackageManager.PERMISSION_GRANTED){
+
+                Intent ligacaoTelefonica = new Intent(Intent.ACTION_CALL);
+                ligacaoTelefonica.setData(Uri.parse("tel:" + student.getNumber()));
+                startActivity(ligacaoTelefonica);
+            }
+        }
     }
 
     private void buildRemove(final Student student, final StudentDAO studentDAO, MenuItem deleteMenuItem) {

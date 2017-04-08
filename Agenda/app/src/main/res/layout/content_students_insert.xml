@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-        <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -15,43 +15,64 @@
         tools:context="br.com.costa.agenda.StudentsInsertActivity"
         tools:showIn="@layout/activity_students_insert">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginBottom="25dp"
+                android:background="#00A8EC"
+                android:src="@drawable/person" />
+
+            <Button
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/this_background_button_camera"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="13dp" />
+
+        </RelativeLayout>
+
         <EditText
             android:id="@+id/studentsInsert_editTextName"
-            android:hint="Nome"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="Nome" />
 
         <EditText
             android:id="@+id/studentsInsert_editTextAddres"
-            android:hint="Endereço"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="Endereço" />
 
         <EditText
             android:id="@+id/studentsInsert_editTextEmail"
-            android:hint="Email"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="Email" />
 
-            <EditText
-                android:id="@+id/studentsInsert_editTextNumber"
-                android:hint="Número"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/studentsInsert_editTextNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Número" />
 
 
         <EditText
             android:id="@+id/studentsInsert_editTextSite"
-            android:hint="Site"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:hint="Site" />
 
         <RatingBar
             android:id="@+id/studentInsert_ratingBarNote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:numStars="5"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:numStars="5" />
 
     </LinearLayout>
 
