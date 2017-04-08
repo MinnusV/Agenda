@@ -15,6 +15,15 @@ public class Student implements Serializable{
     private String number;
     private String site;
     private Double note;
+    private String pathPhoto;
+
+    public String getPathPhoto() {
+        return pathPhoto;
+    }
+
+    public void setPathPhoto(String pathPhoto) {
+        this.pathPhoto = pathPhoto;
+    }
 
     public Long getId() {
         return id;

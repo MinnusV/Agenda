@@ -5,28 +5,20 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.provider.Browser;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
 import android.view.View;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Adapter;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.List;
 
+import br.com.costa.agenda.adapter.StudentAdapter;
 import br.com.costa.agenda.dao.StudentDAO;
 import br.com.costa.agenda.model.Student;
 
@@ -166,7 +158,7 @@ public class StudentsListActivity extends AppCompatActivity {
         List<Student> studentList = studentDAO.read();
         studentDAO.close();
 
-        ArrayAdapter<Student> studentsListViewAdapter = new ArrayAdapter<Student>(this, android.R.layout.simple_list_item_1, studentList);
+        StudentAdapter studentsListViewAdapter = new StudentAdapter(this, studentList);
         studentListView.setAdapter(studentsListViewAdapter);
     }
 

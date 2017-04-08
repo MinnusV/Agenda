@@ -1,8 +1,12 @@
 package br.com.costa.agenda.utils;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import br.com.costa.agenda.R;
 import br.com.costa.agenda.model.Student;
@@ -19,6 +23,7 @@ public class StudentsInsertUtil{
     private EditText textNumber;
     private EditText textSite;
     private RatingBar ratingNote;
+    private ImageView pathPhoto;
     private Student student;
 
     public StudentsInsertUtil(AppCompatActivity appCompatActivity){
@@ -29,6 +34,7 @@ public class StudentsInsertUtil{
         textNumber = (EditText) appCompatActivity.findViewById(R.id.studentsInsert_editTextNumber);
         textSite = (EditText) appCompatActivity.findViewById(R.id.studentsInsert_editTextSite);
         ratingNote = (RatingBar) appCompatActivity.findViewById(R.id.studentInsert_ratingBarNote);
+        pathPhoto = (ImageView) appCompatActivity.findViewById(R.id.studentInsert_imageViewPhoto);
         student = new Student();
     }
 
@@ -70,12 +76,15 @@ public class StudentsInsertUtil{
 
         Float note = ratingNote.getRating();
 
+        String path = pathPhoto.getTag().toString();
+
         this.student.setName(name);
         this.student.setAddress(address);
         this.student.setEmail(email);
         this.student.setNumber(number);
         this.student.setSite(site);
         this.student.setNote(Double.valueOf(note));
+        this.student.setPathPhoto(path);
 
         return this.student;
     }
@@ -93,6 +102,14 @@ public class StudentsInsertUtil{
         textSite.setText(editStudent.getSite());
 
         ratingNote.setRating(editStudent.getNote().floatValue());
+
+        if(editStudent.getPathPhoto() != null){
+            Bitmap bitmap = BitmapFactory.decodeFile(editStudent.getPathPhoto());
+            Bitmap bitmapReduce = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
+            pathPhoto.setScaleType(ImageView.ScaleType.FIT_XY);
+            pathPhoto.setImageBitmap(bitmapReduce);
+            pathPhoto.setTag(editStudent.getPathPhoto());
+        }
 
         this.student = editStudent;
 

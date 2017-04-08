@@ -1,6 +1,10 @@
 package br.com.costa.agenda;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +14,10 @@ import android.view.MenuItem;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.io.File;
 
 import br.com.costa.agenda.dao.StudentDAO;
 import br.com.costa.agenda.model.Student;
@@ -20,6 +27,9 @@ public class StudentsInsertActivity extends AppCompatActivity {
 
 
     private StudentsInsertUtil studentsInsertUtil;
+    private final static int CODE_PHOTO = 567;
+    String pathPhoto;
+    private ImageView imageViewPhoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +51,27 @@ public class StudentsInsertActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intentCaptureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivity(intentCaptureImage);
+                pathPhoto = getExternalFilesDir(null) +  "/" +System.currentTimeMillis() + ".jpg";
+                File filePhoto = new File(pathPhoto);
+                intentCaptureImage.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(filePhoto));
+                startActivityForResult(intentCaptureImage, CODE_PHOTO);
             }
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == CODE_PHOTO && resultCode == Activity.RESULT_OK){
+            imageViewPhoto = (ImageView) findViewById(R.id.studentInsert_imageViewPhoto);
+            Bitmap bitmap = BitmapFactory.decodeFile(pathPhoto);
+            Bitmap bitmapReduce = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
+            imageViewPhoto.setScaleType(ImageView.ScaleType.FIT_XY);
+            imageViewPhoto.setImageBitmap(bitmapReduce);
+            imageViewPhoto.setTag(pathPhoto);
+        }
     }
 
     @Override
