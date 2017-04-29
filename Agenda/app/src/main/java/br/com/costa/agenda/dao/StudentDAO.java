@@ -103,6 +103,17 @@ public class StudentDAO extends SQLiteOpenHelper{
         database.update("Students", studentValues, "id = ?", params);
     }
 
+    public boolean IsStudent(String phone){
+        SQLiteDatabase database = getReadableDatabase();
+
+        Cursor data = database.rawQuery("SELECT * FROM Students WHERE number = ?", new String[]{phone});
+
+        boolean exists = data.getCount() > 0;
+        data.close();
+
+        return exists;
+    }
+
     @NonNull
     private ContentValues getContentValues(Student student) {
         ContentValues studentValues = new ContentValues();
