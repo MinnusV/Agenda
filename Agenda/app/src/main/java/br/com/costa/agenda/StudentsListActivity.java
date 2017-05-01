@@ -9,6 +9,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.MenuItem;
 import android.widget.AdapterView;
@@ -18,9 +20,12 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import br.com.costa.agenda.Client.WebClient;
 import br.com.costa.agenda.adapter.StudentAdapter;
+import br.com.costa.agenda.converter.StudentConverter;
 import br.com.costa.agenda.dao.StudentDAO;
 import br.com.costa.agenda.model.Student;
+import br.com.costa.agenda.task.SendStudentTask;
 
 public class StudentsListActivity extends AppCompatActivity {
 
@@ -111,6 +116,26 @@ public class StudentsListActivity extends AppCompatActivity {
                 startActivity(ligacaoTelefonica);
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.this_menu_cloud, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.StudentsInsert_MenuCloud:
+                SendStudentTask sendStudentTask = (SendStudentTask) new SendStudentTask(this).execute();
+                break;
+        }
+
+        return true;
     }
 
     private void buildRemove(final Student student, final StudentDAO studentDAO, MenuItem deleteMenuItem) {
